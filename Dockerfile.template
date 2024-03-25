@@ -13,7 +13,7 @@
 FROM loongcr.lcpu.dev/lcpu/archlinux AS verify
 COPY TEMPLATE_ROOTFS_FILE /
 
-RUN pacman -S --noconfirm curl
+RUN pacman -Sy --noconfirm && pacman -S --noconfirm curl
 
 RUN TEMPLATE_ROOTFS_DOWNLOAD && \
     echo "TEMPLATE_ROOTFS_HASH" > /tmp/sha256sums.txt && \
