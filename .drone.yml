@@ -11,7 +11,8 @@ steps:
     environment:
       DOCKER_PASSWORD:
         from_secret: docker_password
-      GHCR_
+      GHCR_TOKEN:
+        from_secret: ghcr_token
       DOCKER_HOST: unix:///run/user/1001/docker.sock
     commands:
     - pacman -Sy --noconfirm && pacman -S --noconfirm docker make git make fakechroot fakeroot devtools
