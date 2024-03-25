@@ -1,4 +1,4 @@
-OCITOOL=podman # or docker
+OCITOOL=docker
 BUILDDIR=$(shell pwd)/build
 OUTPUTDIR=$(shell pwd)/output
 
