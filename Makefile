@@ -16,6 +16,6 @@ $(OUTPUTDIR)/Dockerfile.%: $(OUTPUTDIR)/%.tar.zst
 
 # The following is for local builds only, it is not used by the CI/CD pipeline
 
-all: image-base image-base-devel image-multilib-devel
+all: image-base image-base-devel
 image-%: $(OUTPUTDIR)/Dockerfile.%
 	${OCITOOL} build -f $(OUTPUTDIR)/Dockerfile.$(*) -t loongcr.lcpu.dev/lcpu/archlinux:$(*) $(OUTPUTDIR)
