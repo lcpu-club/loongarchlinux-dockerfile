@@ -13,7 +13,7 @@
 FROM loongcr.lcpu.dev/lcpu/archlinux AS verify
 COPY TEMPLATE_ROOTFS_FILE /
 
-RUN apk add --no-cache curl tar zstd
+RUN pacman -S --noconfirm curl
 
 RUN TEMPLATE_ROOTFS_DOWNLOAD && \
     echo "TEMPLATE_ROOTFS_HASH" > /tmp/sha256sums.txt && \
@@ -24,11 +24,11 @@ RUN TEMPLATE_ROOTFS_DOWNLOAD && \
 FROM scratch AS root
 
 LABEL org.opencontainers.image.title="TEMPLATE_TITLE"
-LABEL org.opencontainers.image.description="Official containerd image of Arch Linux, a simple, lightweight Linux distribution aimed for flexibility."
-LABEL org.opencontainers.image.authors="Santiago Torres-Arias <santiago@archlinux.org> (@SantiagoTorres), Christian Rebischke <Chris.Rebischke@archlinux.org> (@shibumi), Justin Kromlinger <hashworks@archlinux.org> (@hashworks)"
-LABEL org.opencontainers.image.url="https://gitlab.archlinux.org/archlinux/archlinux-docker/-/blob/master/README.md"
+LABEL org.opencontainers.image.description="Image of Loong Arch Linux"
+LABEL org.opencontainers.image.authors="Yuanhang Sun <leavelet@163.com> "
+LABEL org.opencontainers.image.url="https://github.com/lcpu-club/loongarchlinux-docker/blob/master/README.md"
 LABEL org.opencontainers.image.documentation="https://wiki.archlinux.org/title/Docker#Arch_Linux"
-LABEL org.opencontainers.image.source="https://gitlab.archlinux.org/archlinux/archlinux-docker"
+LABEL org.opencontainers.image.source="https://github.com/lcpu-club/loongarchlinux-docker"
 LABEL org.opencontainers.image.licenses="GPL-3.0-or-later"
 LABEL org.opencontainers.image.version="TEMPLATE_VERSION_ID"
 LABEL org.opencontainers.image.revision="TEMPLATE_REVISION"
