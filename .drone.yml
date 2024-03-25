@@ -1,0 +1,36 @@
+kind: pipeline
+name: docker-build
+type: docker
+
+steps:
+  - name: build
+    image: loongcr.lcpu.dev/lcpu/archlinux:base
+    volumes:
+    - name: dockersock
+      path: /var/run/user/1001/docker.sock
+    environment:
+      DOCKER_PASSWORD:
+        from_secret: docker_password
+      GHCR_
+      DOCKER_HOST: unix:///run/user/1001/docker.sock
+    commands:
+    - pacman -Sy --noconfirm && pacman -S --noconfirm docker make git make fakechroot fakeroot devtools
+    - make all
+    - docker tag loongcr.lcpu.dev/lcpu/archlinux:base  loongcr.lcpu.dev/lcpu/archlinux:latest
+    - docker tag loongcr.lcpu.dev/lcpu/archlinux:base  ghcr.io/lcpu-club/archlinux:base
+    - docker tag loongcr.lcpu.dev/lcpu/archlinux:base-devel  ghcr.io/lcpu-club/archlinux:base-devel
+    - docker tag ghcr.io/lcpu-club/archlinux:base  ghcr.io/lcpu-club/archlinux:latest
+    - docker login -u="\$app" -p="$DOCKER_PASSWORD" loongcr.lcpu.dev
+    - docker push loongcr.lcpu.dev/lcpu/archlinux:latest
+    - docker push loongcr.lcpu.dev/lcpu/archlinux:base
+    - docker push loongcr.lcpu.dev/lcpu/archlinux:base-devel
+    - docker login -u="lcpu-club" -p="$GHCR_TOKEN" ghcr.io
+    - docker push ghcr.io/lcpu-club/archlinux:latest
+    - docker push ghcr.io/lcpu-club/archlinux:base
+    - docker push ghcr.io/lcpu-club/archlinux:base-devel
+node:
+  size: small
+volumes:
+- name: dockersock
+  host:
+    path: /var/run/user/1001/docker.sock
